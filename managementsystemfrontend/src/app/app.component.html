@@ -1,0 +1,80 @@
+<div class="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg">
+
+  <h1>Employee Management System</h1>
+
+  <!-- Formulaire -->
+  <form [formGroup]="employeeForm" (ngSubmit)="isEditing ? updateEmployee() : addEmployee()" class="space-y-4">
+    <div>
+      <label class="block text-sm font-medium text-gray-700">First Name</label>
+      <input type="text" formControlName="firstName" />
+      <small *ngIf="employeeForm.get('firstName')?.invalid && employeeForm.get('firstName')?.touched">
+        First Name is required.
+      </small>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Last Name</label>
+      <input type="text" formControlName="lastName" />
+      <small *ngIf="employeeForm.get('lastName')?.invalid && employeeForm.get('lastName')?.touched">
+        Last Name is required.
+      </small>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Email</label>
+      <input type="email" formControlName="email" />
+      <small *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched">
+        Valid Email is required.
+      </small>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Position</label>
+      <input type="text" formControlName="position" />
+      <small *ngIf="employeeForm.get('position')?.invalid && employeeForm.get('position')?.touched">
+        Position is required.
+      </small>
+    </div>
+
+    <div class="flex items-center space-x-4 mt-4">
+      <button type="submit" class="bg-blue text-white">
+        {{ isEditing ? 'Update' : 'Add' }} Employee
+      </button>
+      <button type="button" (click)="cancelEditing()" *ngIf="isEditing" class="bg-gray text-white">
+        Cancel
+      </button>
+    </div>
+  </form>
+
+  <!-- Tableau des employés -->
+  <table class="w-full mt-8 border-collapse border border-gray-300">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="border border-gray-300 px-4 py-2">ID</th>
+        <th class="border border-gray-300 px-4 py-2">First Name</th>
+        <th class="border border-gray-300 px-4 py-2">Last Name</th>
+        <th class="border border-gray-300 px-4 py-2">Email</th>
+        <th class="border border-gray-300 px-4 py-2">Position</th>
+        <th class="border border-gray-300 px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees" class="hover:bg-gray-100">
+        <td class="border border-gray-300 px-4 py-2">{{ employee.id }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ employee.firstName }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ employee.lastName }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ employee.email }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ employee.position }}</td>
+        <td class="border border-gray-300 px-4 py-2">
+          <button (click)="editEmployee(employee)" class="bg-blue text-white mr-2">
+            Edit
+          </button>
+          <button (click)="deleteEmployee(employee.id)" class="bg-red text-white">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
